@@ -1,0 +1,31 @@
+{% extends "base.html" %}{% block title %}Users{% endblock %}
+{% block content %}
+<h1>Users</h1>
+{% include "admin/_nav.html" %}
+<div class="table-wrap"><table>
+  <tr><th>Id</th><th>Email</th><th>Role</th><th>Status</th><th>Credit</th><th>Add credit</th><th></th></tr>
+  {% for u in users %}
+  <tr>
+    <td>{{ u.id }}</td><td>{{ u.email }}</td>
+    <td>{{ 'Admin' if u.is_admin else 'Customer' }}</td>
+    <td>{{ 'Active' if u.is_enabled else 'Disabled' }}{% if not u.is_confirmed %} (unconfirmed){% endif %}</td>
+    <td>{{ u.store_credit|money }}</td>
+    <td>
+      <form method="post" action="{{ url_for('admin.add_credit', user_id=u.id) }}" class="row">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="text" name="amount" placeholder="e.g. 50" maxlength="8" class="qty">
+        <button class="btn small">Add</button>
+      </form>
+    </td>
+    <td>
+      {% if u.id != current_user.id %}
+      <form method="post" action="{{ url_for('admin.toggle_user', user_id=u.id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="btn small secondary">{{ 'Disable' if u.is_enabled else 'Enable' }}</button>
+      </form>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table></div>
+{% endblock %}

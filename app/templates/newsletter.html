@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block title %}Newsletter{% endblock %}
+{% block content %}
+<div class="card narrow">
+  <h1>Newsletter</h1>
+  {% if signup %}
+    <p>You are subscribed as {{ current_user.email }}.</p>
+    <p>Your one-time 10% coupon: <strong class="code">{{ signup.coupon_code }}</strong></p>
+    <p class="muted">Use it at checkout. It works once and only on your account.</p>
+  {% else %}
+    <p>Subscribe to news and offers and get a 10% coupon for your next order.</p>
+    <form method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button class="btn">Subscribe with {{ current_user.email }}</button>
+    </form>
+  {% endif %}
+</div>
+{% endblock %}

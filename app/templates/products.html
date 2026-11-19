@@ -1,0 +1,26 @@
+{% extends "base.html" %}{% block title %}Products{% endblock %}
+{% block content %}
+<h1>Products</h1>
+<form method="get" class="filters">
+  <input type="search" name="q" value="{{ q }}" placeholder="Search products" maxlength="100">
+  <select name="category">
+    <option value="">All categories</option>
+    {% for c in categories %}<option value="{{ c }}" {% if c == category %}selected{% endif %}>{{ c }}</option>{% endfor %}
+  </select>
+  <input type="text" name="max_price" value="{{ max_price }}" placeholder="Max price" inputmode="decimal" maxlength="10">
+  <button class="btn">Search</button>
+</form>
+{% if error %}<div class="flash error">{{ error }}</div>{% endif %}
+{% if q %}<p>Results for “{{ q }}”</p>{% endif %}
+<div class="grid">
+  {% for p in products %}
+  <a class="card product" href="{{ url_for('catalogue.product', product_id=p.id) }}">
+    <span class="tag">{{ p.category }}</span>
+    <h3>{{ p.name }}</h3>
+    <p class="price">{{ p.price|money }}</p>
+  </a>
+  {% else %}
+  <p>No products match your search.</p>
+  {% endfor %}
+</div>
+{% endblock %}

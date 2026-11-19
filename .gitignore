@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+secureshop.db
+emails.log
+.venv/
+.pytest_cache/

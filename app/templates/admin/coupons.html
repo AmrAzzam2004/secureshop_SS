@@ -1,0 +1,27 @@
+{% extends "base.html" %}{% block title %}Coupons{% endblock %}
+{% block content %}
+<h1>Coupons</h1>
+{% include "admin/_nav.html" %}
+<div class="card">
+  <h2>New coupon</h2>
+  <form method="post" class="filters">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="text" name="code" placeholder="CODE" maxlength="30" required>
+    <input type="number" name="percent_off" placeholder="% off" min="1" max="100" required>
+    <input type="number" name="max_uses" placeholder="Max uses" min="1" max="100000" required>
+    <input type="date" name="expires_at">
+    <button class="btn">Create</button>
+  </form>
+</div>
+<div class="table-wrap"><table>
+  <tr><th>Code</th><th>% off</th><th>Used</th><th>Expires</th><th>Owner</th><th>Status</th><th></th></tr>
+  {% for c in coupons %}
+  <tr><td>{{ c.code }}</td><td>{{ c.percent_off }}%</td><td>{{ c.uses }} / {{ c.max_uses }}</td>
+      <td>{{ c.expires_at.strftime('%Y-%m-%d') if c.expires_at else 'Never' }}</td>
+      <td>{{ c.owner_id or 'Anyone' }}</td><td>{{ 'Active' if c.is_active else 'Disabled' }}</td>
+      <td><form method="post" action="{{ url_for('admin.toggle_coupon', coupon_id=c.id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="btn small secondary">{{ 'Disable' if c.is_active else 'Enable' }}</button></form></td></tr>
+  {% endfor %}
+</table></div>
+{% endblock %}

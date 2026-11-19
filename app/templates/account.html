@@ -1,0 +1,39 @@
+{% extends "base.html" %}{% block title %}My account{% endblock %}
+{% block content %}
+<h1>My account</h1>
+<div class="two-col">
+  <div class="card">
+    <h2>Profile</h2>
+    <p>Email: {{ current_user.email }}</p>
+    <p>Store credit: <strong>{{ current_user.store_credit|money }}</strong></p>
+    <form method="post" action="{{ url_for('account.profile') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>Name <input type="text" name="name" value="{{ current_user.name }}" maxlength="80"></label>
+      <label>Address <input type="text" name="address" value="{{ current_user.address }}" maxlength="200"></label>
+      <button class="btn">Save profile</button>
+    </form>
+  </div>
+  <div class="card">
+    <h2>Change password</h2>
+    <form method="post" action="{{ url_for('account.change_password') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>Current password <input type="password" name="current_password" maxlength="128" required></label>
+      <label>New password <input type="password" name="new_password" minlength="10" maxlength="128" required></label>
+      <label>Confirm new password <input type="password" name="confirm" maxlength="128" required></label>
+      <button class="btn">Change password</button>
+    </form>
+  </div>
+</div>
+<div class="card">
+  <h2>My orders</h2>
+  {% if orders %}
+  <div class="table-wrap"><table>
+    <tr><th>Order</th><th>Date</th><th>Total</th></tr>
+    {% for o in orders %}
+    <tr><td><a href="{{ url_for('shop.order_detail', order_id=o.id) }}">#{{ o.id }}</a></td>
+        <td>{{ o.created_at.strftime('%Y-%m-%d') }}</td><td>{{ o.total|money }}</td></tr>
+    {% endfor %}
+  </table></div>
+  {% else %}<p>No orders yet.</p>{% endif %}
+</div>
+{% endblock %}

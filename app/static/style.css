@@ -1,0 +1,53 @@
+/* SecureShop - simple responsive styles (no JavaScript, no external files) */
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f4f6fa; color: #1d2433; }
+a { color: #1f4fbf; }
+main { max-width: 1000px; margin: 0 auto; padding: 16px; }
+h1 { margin-top: 8px; }
+.topbar { background: #1f3864; color: #fff; display: flex; flex-wrap: wrap; align-items: center;
+          justify-content: space-between; padding: 12px 16px; gap: 8px; }
+.topbar a, .topbar .link { color: #fff; text-decoration: none; margin-left: 14px; }
+.logo { font-weight: bold; font-size: 20px; margin-left: 0 !important; }
+nav { display: flex; flex-wrap: wrap; align-items: center; }
+.subnav { margin-bottom: 16px; }
+.subnav a { margin-right: 16px; font-weight: bold; }
+.inline { display: inline; }
+.link { background: none; border: none; font: inherit; cursor: pointer; padding: 0; }
+.card { background: #fff; border-radius: 10px; padding: 18px; margin-bottom: 16px;
+        box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.narrow { max-width: 440px; margin-left: auto; margin-right: auto; }
+.center { text-align: center; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.product { text-decoration: none; color: inherit; }
+.product:hover { box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+.tag { font-size: 12px; background: #e6ecf8; color: #1f3864; padding: 2px 8px; border-radius: 10px; }
+.price { font-size: 20px; font-weight: bold; color: #1f3864; }
+.total { font-size: 18px; font-weight: bold; }
+.muted { color: #667085; }
+.code { font-family: monospace; font-size: 18px; background: #fff2cc; padding: 2px 6px; }
+label { display: block; margin-bottom: 12px; font-weight: bold; }
+label.check { font-weight: normal; }
+input, select, textarea { display: block; width: 100%; padding: 9px; margin-top: 4px; font: inherit;
+                          border: 1px solid #c5cbd6; border-radius: 6px; }
+input[type=checkbox] { display: inline; width: auto; }
+.filters, .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+.filters input, .filters select, .row input { width: auto; flex: 1 1 140px; margin: 0; }
+.row .qty, .qty { flex: 0 0 80px; width: 80px; }
+.btn { display: inline-block; background: #1f4fbf; color: #fff; border: none; border-radius: 6px;
+       padding: 10px 16px; font: inherit; cursor: pointer; text-decoration: none; }
+.btn:hover { background: #173c91; }
+.btn.small { padding: 6px 10px; font-size: 14px; }
+.btn.secondary { background: #e6ecf8; color: #1f3864; }
+.flash { padding: 10px 14px; border-radius: 6px; margin-bottom: 12px; }
+.flash.success { background: #e3f4e8; color: #1e6b34; }
+.flash.error { background: #fde7e7; color: #9b1c1c; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; background: #fff; margin-bottom: 12px; }
+th, td { text-align: left; padding: 8px; border-bottom: 1px solid #e3e7ee; vertical-align: middle; }
+td form { margin: 0; }
+footer { text-align: center; color: #667085; padding: 24px; font-size: 13px; }
+@media (max-width: 640px) {
+  .two-col { grid-template-columns: 1fr; }
+  .topbar a, .topbar .link { margin-left: 10px; }
+}

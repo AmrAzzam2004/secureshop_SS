@@ -1,0 +1,34 @@
+{% extends "base.html" %}{% block title %}Checkout{% endblock %}
+{% block content %}
+<h1>Checkout</h1>
+<div class="card">
+  <div class="table-wrap"><table>
+    <tr><th>Product</th><th>Quantity</th><th>Total</th></tr>
+    {% for product, qty, line_total in lines %}
+    <tr><td>{{ product.name }}</td><td>{{ qty }}</td><td>{{ line_total|money }}</td></tr>
+    {% endfor %}
+  </table></div>
+  <p>Subtotal: {{ subtotal|money }}</p>
+  {% if coupon %}
+  <div class="row">
+    <p>Coupon {{ coupon.code }} ({{ coupon.percent_off }}% off): −{{ discount|money }}</p>
+    <form method="post" action="{{ url_for('shop.remove_coupon') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button class="btn small secondary">Remove coupon</button>
+    </form>
+  </div>
+  {% else %}
+  <form method="post" action="{{ url_for('shop.apply_coupon') }}" class="row">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="text" name="code" placeholder="Coupon code" maxlength="30">
+    <button class="btn small secondary">Apply coupon</button>
+  </form>
+  {% endif %}
+  <p class="total">To pay: {{ total|money }}</p>
+  <p class="muted">Your store credit: {{ current_user.store_credit|money }}</p>
+  <form method="post" action="{{ url_for('shop.place_order') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button class="btn">Pay with store credit</button>
+  </form>
+</div>
+{% endblock %}

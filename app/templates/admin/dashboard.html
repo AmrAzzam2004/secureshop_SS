@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% block title %}Admin{% endblock %}
+{% block content %}
+<h1>Admin panel</h1>
+{% include "admin/_nav.html" %}
+<div class="grid">
+  <div class="card"><h3>Users</h3><p class="price">{{ users }}</p></div>
+  <div class="card"><h3>Products</h3><p class="price">{{ products }}</p></div>
+  <div class="card"><h3>Orders</h3><p class="price">{{ orders }}</p></div>
+</div>
+<div class="card">
+  <h2>Security log (latest 30)</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Time (UTC)</th><th>User id</th><th>IP</th><th>Action</th></tr>
+    {% for l in logs %}
+    <tr><td>{{ l.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td><td>{{ l.user_id or '-' }}</td><td>{{ l.ip }}</td><td>{{ l.action }}</td></tr>
+    {% endfor %}
+  </table></div>
+</div>
+{% endblock %}

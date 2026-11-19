@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block title %}Order #{{ order.id }}{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Order #{{ order.id }}</h1>
+  <p class="muted">Placed {{ order.created_at.strftime('%Y-%m-%d %H:%M') }} UTC</p>
+  <div class="table-wrap"><table>
+    <tr><th>Product</th><th>Price</th><th>Quantity</th><th>Total</th></tr>
+    {% for item in order.items %}
+    <tr><td>{{ item.name }}</td><td>{{ item.unit_price|money }}</td><td>{{ item.quantity }}</td><td>{{ (item.unit_price * item.quantity)|money }}</td></tr>
+    {% endfor %}
+  </table></div>
+  <p>Subtotal: {{ order.subtotal|money }}</p>
+  {% if order.coupon_code %}<p>Coupon {{ order.coupon_code }}: −{{ order.discount|money }}</p>{% endif %}
+  <p class="total">Paid with store credit: {{ order.total|money }}</p>
+  <a class="btn secondary" href="{{ url_for('account.profile') }}">All my orders</a>
+</div>
+{% endblock %}

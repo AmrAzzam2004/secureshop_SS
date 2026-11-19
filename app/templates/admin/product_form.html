@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block title %}{{ 'Edit' if product else 'Add' }} product{% endblock %}
+{% block content %}
+<h1>{{ 'Edit product' if product else 'Add product' }}</h1>
+{% include "admin/_nav.html" %}
+<div class="card narrow">
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Name <input type="text" name="name" value="{{ product.name if product else '' }}" maxlength="100" required></label>
+    <label>Category <input type="text" name="category" value="{{ product.category if product else '' }}" maxlength="50"></label>
+    <label>Price ($) <input type="text" name="price" value="{{ '%.2f'|format(product.price / 100) if product else '' }}" inputmode="decimal" maxlength="10" required></label>
+    <label>Stock <input type="number" name="stock" value="{{ product.stock if product else 0 }}" min="0" max="100000" required></label>
+    <label>Description <textarea name="description" maxlength="2000" rows="5">{{ product.description if product else '' }}</textarea></label>
+    <label class="check"><input type="checkbox" name="is_active" {% if not product or product.is_active %}checked{% endif %}> Visible in the shop</label>
+    <button class="btn">Save</button>
+  </form>
+</div>
+{% endblock %}

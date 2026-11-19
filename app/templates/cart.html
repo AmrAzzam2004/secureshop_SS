@@ -1,0 +1,35 @@
+{% extends "base.html" %}{% block title %}Cart{% endblock %}
+{% block content %}
+<h1>Your cart</h1>
+{% if lines %}
+<div class="table-wrap"><table>
+  <tr><th>Product</th><th>Price</th><th>Quantity</th><th>Total</th><th></th></tr>
+  {% for product, qty, line_total in lines %}
+  <tr>
+    <td><a href="{{ url_for('catalogue.product', product_id=product.id) }}">{{ product.name }}</a></td>
+    <td>{{ product.price|money }}</td>
+    <td>
+      <form method="post" action="{{ url_for('cart.update') }}" class="row">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="product_id" value="{{ product.id }}">
+        <input type="number" name="quantity" value="{{ qty }}" min="1" max="10" class="qty">
+        <button class="btn small">Update</button>
+      </form>
+    </td>
+    <td>{{ line_total|money }}</td>
+    <td>
+      <form method="post" action="{{ url_for('cart.remove') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="product_id" value="{{ product.id }}">
+        <button class="btn small secondary">Remove</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table></div>
+<p class="total">Total: {{ total|money }}</p>
+<a class="btn" href="{{ url_for('shop.checkout') }}">Go to checkout</a>
+{% else %}
+<p>Your cart is empty. <a href="{{ url_for('catalogue.products') }}">Browse products</a></p>
+{% endif %}
+{% endblock %}
