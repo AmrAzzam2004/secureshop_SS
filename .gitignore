@@ -4,3 +4,4 @@ secureshop.db
 emails.log
 .venv/
 .pytest_cache/
+.env

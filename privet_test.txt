@@ -1,0 +1,3 @@
+why we dont use username insted of email ?
+in email section we force the user to add the email thing like (@,.com,etc.) which privent SQL injection to happen in login
+
